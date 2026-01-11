@@ -1,0 +1,175 @@
+//@version=5
+indicator("Muntiple Macro", shorttitle="Muntiple Macro", overlay=true, max_lines_count=500, max_labels_count=500, max_boxes_count=500)
+
+//Fonctions
+macroLabel(sessionStr) =>
+    // sessionStr format "HHMM-HHMM"
+    startH = str.tonumber(str.substring(sessionStr, 0, 2))
+    startM = str.tonumber(str.substring(sessionStr, 2, 4))
+    endH   = str.tonumber(str.substring(sessionStr, 5, 7))
+    endM   = str.tonumber(str.substring(sessionStr, 7, 9))
+
+    // Convertir en UTC-5 (toujours)
+    startH_UTC5 = (startH + 24) % 24
+    endH_UTC5   = (endH   + 24) % 24
+
+    // Formatage "HH:MM - HH:MM"
+    str.format("{0}:{1,number,00} - {2}:{3,number,00}", startH_UTC5, startM, endH_UTC5, endM)
+
+
+//#region[GLOBAL]
+var line[] EXT = array.new_line()
+var label[] LBL = array.new_label()
+oneDayMS    = 86400000
+oneBarMS    = time_close - time
+noColor     = color.new(#000000, 100)
+one         = ta.highest(timeframe.in_seconds("15") / timeframe.in_seconds(timeframe.period)) + syminfo.mintick * 10
+y_btm_Line1 = one
+y_top_Line1 = one + syminfo.mintick * 5
+//#endregion
+
+//#region[INPUTS]
+// Inputs macros using unified style
+
+groupSettings = "Settings"
+disp          = display.all - display.status_line
+
+macroColor    = input.color(color.new(#ffffff, 0), "Macro color", inline='settings l1', group = groupSettings)
+macroMode     = input.string("On Chart", "", inline='settings l1', options=["On Chart", "New Pane"], tooltip='Select where to plot macro lines.', group = groupSettings)
+macroShowTime = input.bool(true, "Show Time?", inline='settings l2', group = groupSettings)
+macroExtend   = input.bool(true, "Extend Macro Lines?", inline='settings l2', tooltip='Extends macro lines on chart if true.', group = groupSettings)
+
+
+
+groupMacro    = 'Macro'
+macroEnable   = input.bool(true, "" ,inline ="inline macro", group = groupMacro)
+m1            = input.string('Macro title', '', inline = "inline macro", group = groupMacro, display = disp)
+macroSession  = input.session("0000-0100", "", inline = "inline macro" , group = groupMacro, display = disp)
+//#endregion
+
+
+//#region[FUNCTIONS]
+getNextMacroTS(int H, int M) =>
+    y  = year(time, "America/New_York")
+    mo = month(time, "America/New_York")
+    d  = dayofmonth(time, "America/New_York")
+    tsToday = timestamp("America/New_York", y, mo, d, H, M)
+    tsToday > time ? tsToday : tsToday + oneDayMS
+
+time_isMacro(int H_start, int M_start, int H_end, int M_end) =>
+    h = hour(time, "America/New_York")
+    m = minute(time, "America/New_York")
+    h == H_start ? (H_start != H_end ? m >= M_start : m >= M_start and m < M_end) : (h > H_start ? (h == H_end ? m < M_end : h < H_end) : false)
+
+_controlMacroLine(line[] _lines, label[] _lbl, bool _time) =>
+    if _time
+        _lbl.last().set_x(math.round(math.avg(_lines.get(_lines.size()-2).get_x1(), time)))
+        if high > _lines.last().get_y2() - syminfo.mintick*10
+            _lines.get(_lines.size()-2).set_y2(high + syminfo.mintick*10)
+            _lines.last().set_y1(high + syminfo.mintick*10)
+            _lines.last().set_y2(high + syminfo.mintick*10)
+            LBL.last().set_y(high + syminfo.mintick*10)
+        if na or _lines.last().get_x2() == time
+            _lines.last().set_x2(time + oneBarMS)
+
+_controlMacroBox(box[] _boxes, bool _time, bool _friday) =>
+    dly = _friday ? oneDayMS * 3 : oneDayMS
+    if na or _time
+        _boxes.last().set_right(time + dly)
+
+method memoryCleanLine(line[] A) =>
+    if A.size() > 300
+        for i = 0 to 3
+            A.shift().delete()
+method memoryCleanLabel(label[] A) =>
+    if A.size() > 100
+        A.shift().delete()
+
+
+macroOC(line[] LINES, bool _time, string _kzTime, bool _friday)=>
+	dly  = _friday?oneDayMS*3:oneDayMS
+	_txt = macroShowTime ? "MACRO\n" + _kzTime : "MACRO"
+	_tt  = "MACRO\n"+_kzTime
+
+	// Overlay False
+	if not _time[1] and _time
+		_vline1 = line.new(time,y_btm_Line1,time,y_top_Line1,xloc=xloc.bar_time,color=macroColor)
+		LINES.push(_vline1)
+		_hline = line.new(time,y_top_Line1,time+oneBarMS,y_top_Line1,xloc=xloc.bar_time,color=macroColor)
+		LINES.push(_hline)
+		if macroExtend
+			EXT.push(line.new(time,high,time,_vline1.get_y2(),xloc=xloc.bar_time,color=macroColor,style=line.style_dotted))
+
+		if macroMode=="On Chart"
+			LBL.push(label.new(time, LINES.get(LINES.size()-2).get_y2(), macroShowTime?_txt:"", tooltip=_tt, xloc=xloc.bar_time, style=label.style_label_down, color=noColor, textcolor=macroColor, size=size.small))
+
+	if _time[1] and not _time and LINES.size()>0 and LBL.size()>0
+		_vline2 = line.new(time,y_btm_Line1,time,y_top_Line1,xloc=xloc.bar_time,color=macroColor)
+		LBL.last().set_x(math.round(math.avg(LINES.get(LINES.size()-2).get_x1(),time)))
+		if y_top_Line1 > LINES.get(LINES.size()-2).get_y2()
+			LINES.get(LINES.size()-2).set_y2(y_top_Line1)
+			LINES.last().set_y1(y_top_Line1)
+			LINES.last().set_y2(y_top_Line1)
+			LBL.last().set_y(y_top_Line1)
+		else if y_top_Line1 < LINES.get(LINES.size()-2).get_y2()
+			_vline2.set_y2(LINES.get(LINES.size()-2).get_y2())
+		if macroExtend
+			EXT.push(line.new(time,high,time,_vline2.get_y2(),xloc=xloc.bar_time,color=macroColor,style=line.style_dotted))
+
+		LINES.push(_vline2)
+
+	if LINES.size()>0 and LBL.size()>0
+		_controlMacroLine(LINES, LBL, _time)
+		
+
+
+macroNP(box[] BOXES, bool _time, string _labelText, bool _friday) =>
+    dly = _friday ? oneDayMS*3 : oneDayMS
+    _tt  = "MACRO\n" + _labelText
+    var _plotNP = false
+
+    if not _time[1] and _time
+        _macro = box.new(time + dly, 2, time + dly, 0, macroColor, xloc=xloc.bar_time)
+        BOXES.push(_macro)
+        _plotNP := true
+
+    if _time[1] and not _time and BOXES.size() > 0
+        _controlMacroBox(BOXES, true, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+        _plotNP := false
+        label.new(math.round(math.avg(BOXES.last().get_left(), BOXES.last().get_right())), 1, xloc=xloc.bar_time, style=label.style_label_center, color=noColor, tooltip=_tt, text='ⓘ\n\n\n\n\n\n', textcolor=macroColor, size=size.small)
+
+    if _time and _plotNP
+        _controlMacroBox(BOXES, _time, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+//#endregion
+
+
+//#region[LOGIC]
+// Example macro time window
+var line[] _LINES1 = array.new_line()
+var box[] _BOXES1  = array.new_box()
+
+lbl1  = macroLabel(macroSession)
+
+
+// Fonction pour savoir si on est dans la session
+isInSession1() => not na(time(timeframe.period, macroSession, 'UTC-5'))
+
+
+if macroEnable
+    if macroMode == "On Chart"
+        macroOC(_LINES1, isInSession1(), lbl1, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES1, isInSession1(), lbl1, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession1()
+        alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
+//#endregion
+
+
+alertcondition(isInSession1(), title="titre Alerte", message="msg alerte")
+
+//#region[MEMORY CLEAN UP]
+_LINES1.memoryCleanLine()
+EXT.memoryCleanLine()
+LBL.memoryCleanLabel()
+//#endregion
