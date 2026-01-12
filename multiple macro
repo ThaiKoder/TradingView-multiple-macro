@@ -390,6 +390,127 @@ if macroEnable10
 
     if isInSession10()
         alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable11
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession11(), lbl11, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession11(), lbl11, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession11()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable12
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession12(), lbl12, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession12(), lbl12, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession12()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable13
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession13(), lbl13, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession13(), lbl13, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession13()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable14
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession14(), lbl14, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession14(), lbl14, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession14()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable15
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession15(), lbl15, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession15(), lbl15, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession15()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable16
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession16(), lbl16, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession16(), lbl16, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession16()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable17
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession17(), lbl17, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession17(), lbl17, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession17()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable18
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession18(), lbl18, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession18(), lbl18, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession18()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable19
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession19(), lbl19, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession19(), lbl19, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession19()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable20
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession20(), lbl20, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession20(), lbl20, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession20()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable21
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession21(), lbl21, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession21(), lbl21, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession21()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
+
+if macroEnable22
+    if macroMode == "On Chart"
+        macroOC(_LINES, isInSession22(), lbl22, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+    else
+        macroNP(_BOXES, isInSession22(), lbl22, dayofweek(time) == dayofweek.friday and syminfo.type != 'crypto')
+
+    if isInSession22()
+        alert("Barre dans la macro: " + "Alerte text test", alert.freq_once_per_bar)
+
 //#endregion
 
 
