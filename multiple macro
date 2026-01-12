@@ -70,49 +70,48 @@ m6            = input.string("Macro title", "", inline="inline macro6", group=gr
 macroSession6  = input.session("0750-0810", "", inline="inline macro6", group=groupMacroNY, display=disp)
 
 macroEnable7   = input.bool(true, "", inline="inline macro7", group=groupMacroNY)
-m7            = input.string("Macro title", "", inline="inline macro7", group=groupMacroNY, display=disp)
+m7            = input.string("MSS Manipulation / spooling", "", inline="inline macro7", group=groupMacroNY, display=disp)
 macroSession7  = input.session("0820-0840", "", inline="inline macro7", group=groupMacroNY, display=disp)
 
 macroEnable8   = input.bool(true, "", inline="inline macro8", group=groupMacroNY)
-m8            = input.string("Macro title", "", inline="inline macro8", group=groupMacroNY, display=disp)
+m8            = input.string("PRE OPEN accumulation", "", inline="inline macro8", group=groupMacroNY, display=disp)
 macroSession8  = input.session("0850-0910", "", inline="inline macro8", group=groupMacroNY, display=disp)
 
 macroEnable9   = input.bool(true, "", inline="inline macro9", group=groupMacroNY)
-m9            = input.string("Macro title", "", inline="inline macro9", group=groupMacroNY, display=disp)
+m9            = input.string("Open High prob manipulation / retour zone HTF", "", inline="inline macro9", group=groupMacroNY, display=disp)
 macroSession9  = input.session("0920-0940", "", inline="inline macro9", group=groupMacroNY, display=disp)
 
 macroEnable10   = input.bool(true, "", inline="inline macro10", group=groupMacroNY)
-m10            = input.string("Macro title", "", inline="inline macro10", group=groupMacroNY, display=disp)
+m10            = input.string("continuation de 9:20", "", inline="inline macro10", group=groupMacroNY, display=disp)
 macroSession10  = input.session("0950-1010", "", inline="inline macro10", group=groupMacroNY, display=disp)
 
 macroEnable11   = input.bool(true, "", inline="inline macro11", group=groupMacroNY)
-m11            = input.string("Macro title", "", inline="inline macro11", group=groupMacroNY, display=disp)
+m11            = input.string("HIGH Proba reversal", "", inline="inline macro11", group=groupMacroNY, display=disp)
 macroSession11  = input.session("1020-1040", "", inline="inline macro11", group=groupMacroNY, display=disp)
 
 macroEnable12   = input.bool(true, "", inline="inline macro12", group=groupMacroNY)
-m12            = input.string("Macro title", "", inline="inline macro12", group=groupMacroNY, display=disp)
+m12            = input.string("ChOCh / continuation", "", inline="inline macro12", group=groupMacroNY, display=disp)
 macroSession12  = input.session("1150-1110", "", inline="inline macro12", group=groupMacroNY, display=disp)
 
 macroEnable13   = input.bool(true, "", inline="inline macro13", group=groupMacroNY)
-m13            = input.string("Macro title", "", inline="inline macro13", group=groupMacroNY, display=disp)
+m13            = input.string("PRE LUNCH", "", inline="inline macro13", group=groupMacroNY, display=disp)
 macroSession13  = input.session("1250-1310", "", inline="inline macro13", group=groupMacroNY, display=disp)
 
 macroEnable14   = input.bool(true, "", inline="inline macro14", group=groupMacroNY)
-m14            = input.string("Macro title", "", inline="inline macro14", group=groupMacroNY, display=disp)
+m14            = input.string("High Prob opening range", "", inline="inline macro14", group=groupMacroNY, display=disp)
 macroSession14  = input.session("1320-1340", "", inline="inline macro14", group=groupMacroNY, display=disp)
 
 macroEnable15   = input.bool(true, "", inline="inline macro15", group=groupMacroNY)
-m15            = input.string("Macro title", "", inline="inline macro15", group=groupMacroNY, display=disp)
+m15            = input.string("volatilité + livraison du prix a un swing", "", inline="inline macro15", group=groupMacroNY, display=disp)
 macroSession15  = input.session("1420-1440", "", inline="inline macro15", group=groupMacroNY, display=disp)
 
 macroEnable16   = input.bool(true, "", inline="inline macro16", group=groupMacroNY)
-m16            = input.string("Macro title", "", inline="inline macro16", group=groupMacroNY, display=disp)
+m16            = input.string("/!!!\ High prob spooling", "", inline="inline macro16", group=groupMacroNY, display=disp)
 macroSession16  = input.session("1520-1540", "", inline="inline macro16", group=groupMacroNY, display=disp)
 
 macroEnable17   = input.bool(true, "", inline="inline macro17", group=groupMacroNY)
-m17            = input.string("Macro title", "", inline="inline macro17", group=groupMacroNY, display=disp)
+m17            = input.string("Final hour High prob spooling", "", inline="inline macro17", group=groupMacroNY, display=disp)
 macroSession17  = input.session("1550-1610", "", inline="inline macro17", group=groupMacroNY, display=disp)
-
 
 
 macroEnable18   = input.bool(true, "", inline="inline macro18", group=groupMacro)
