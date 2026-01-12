@@ -84,7 +84,7 @@ alert("Barre dans la macro", alert.freq_once_per_bar)
 
 * `alertcondition()` inclus pour automatisation TradingView
 
----
+
 
 ## 🕰️ Timezone
 
