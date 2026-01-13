@@ -131,7 +131,7 @@ macroNP(box[] BOXES, bool _time, string _kzTime, bool _friday)=>
 	if _time and _plotNP
 		_controlMacroBox(BOXES, _time, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
 
-f_sessionToMacro(sessionStr) =>
+sessionToMacro(sessionStr) =>
     // Parse les heures et minutes
     startH = int(str.tonumber(str.substring(sessionStr, 0, 2)))
     startM = int(str.tonumber(str.substring(sessionStr, 2, 4)))
@@ -148,13 +148,14 @@ f_sessionToMacro(sessionStr) =>
 
 
 // Convertit input.session "HHMM-HHMM" en label lisible "HH:MM - HH:MM"
-f_sessionToLabel(sessionStr) =>
+sessionToLabel(sessionStr) =>
     startH = str.substring(sessionStr, 0, 2)
     startM = str.substring(sessionStr, 2, 4)
     endH   = str.substring(sessionStr, 5, 7)
     endM   = str.substring(sessionStr, 7, 9)
     startH + ":" + startM + " - " + endH + ":" + endM
 
+isInSession(macroSession) => not na(time(timeframe.period, macroSession, "UTC-5"))
 //#endregion
 
 
@@ -171,225 +172,269 @@ string1            = input.string("Manipulation", "", inline="inline macro1", gr
 macroSession1      = input.session("0150-0210", "", inline="inline macro1", group=groupMacroLondon, display=disp)
 var line[] _LINES1 = array.new_line()
 var box[]  _BOXES1 = array.new_box()
-time1              = f_sessionToMacro(macroSession1)
-lbl1               = f_sessionToLabel(macroSession1)
+time1              = sessionToMacro(macroSession1)
+lbl1               = sessionToLabel(macroSession1)
 
 show2              = input.bool(true, "", inline="inline macro2", group=groupMacroLondon)
 string2            = input.string("Power hour / expansion", "", inline="inline macro2", group=groupMacroLondon, display=disp)
 macroSession2      = input.session("0250-0310", "", inline="inline macro2", group=groupMacroLondon, display=disp)
 var line[] _LINES2 = array.new_line()
 var box[]  _BOXES2 = array.new_box()
-time2              = f_sessionToMacro(macroSession2)
-lbl2               = f_sessionToLabel(macroSession2)
+time2              = sessionToMacro(macroSession2)
+lbl2               = sessionToLabel(macroSession2)
 
 show3              = input.bool(true, "", inline="inline macro3", group=groupMacroLondon)
 string3            = input.string("reversal / retracement", "", inline="inline macro3", group=groupMacroLondon, display=disp)
 macroSession3      = input.session("0320-0340", "", inline="inline macro3", group=groupMacroLondon, display=disp)
 var line[] _LINES3 = array.new_line()
 var box[]  _BOXES3 = array.new_box()
-time3              = f_sessionToMacro(macroSession3)
-lbl3               = f_sessionToLabel(macroSession3)
+time3              = sessionToMacro(macroSession3)
+lbl3               = sessionToLabel(macroSession3)
 
 show4              = input.bool(true, "", inline="inline macro4", group=groupMacroLondon)
 string4            = input.string("continuation de 3:20", "", inline="inline macro4", group=groupMacroLondon, display=disp)
 macroSession4      = input.session("0350-0410", "", inline="inline macro4", group=groupMacroLondon, display=disp)
 var line[] _LINES4 = array.new_line()
 var box[]  _BOXES4 = array.new_box()
-time4              = f_sessionToMacro(macroSession4)
-lbl4               = f_sessionToLabel(macroSession4)
+time4              = sessionToMacro(macroSession4)
+lbl4               = sessionToLabel(macroSession4)
 
 show5              = input.bool(true, "", inline="inline macro5", group=groupMacroNY)
 string5            = input.string("Macro title", "", inline="inline macro5", group=groupMacroNY, display=disp)
 macroSession5      = input.session("0650-0710", "", inline="inline macro5", group=groupMacroNY, display=disp)
 var line[] _LINES5 = array.new_line()
 var box[]  _BOXES5 = array.new_box()
-time5              = f_sessionToMacro(macroSession5)
-lbl5               = f_sessionToLabel(macroSession5)
+time5              = sessionToMacro(macroSession5)
+lbl5               = sessionToLabel(macroSession5)
 
 show6              = input.bool(true, "", inline="inline macro6", group=groupMacroNY)
 string6            = input.string("Macro title", "", inline="inline macro6", group=groupMacroNY, display=disp)
 macroSession6      = input.session("0750-0810", "", inline="inline macro6", group=groupMacroNY, display=disp)
 var line[] _LINES6 = array.new_line()
 var box[]  _BOXES6 = array.new_box()
-time6              = f_sessionToMacro(macroSession6)
-lbl6               = f_sessionToLabel(macroSession6)
+time6              = sessionToMacro(macroSession6)
+lbl6               = sessionToLabel(macroSession6)
 
 show7              = input.bool(true, "", inline="inline macro7", group=groupMacroNY)
 string7            = input.string("MSS Manipulation / spooling", "", inline="inline macro7", group=groupMacroNY, display=disp)
 macroSession7      = input.session("0820-0840", "", inline="inline macro7", group=groupMacroNY, display=disp)
 var line[] _LINES7 = array.new_line()
 var box[]  _BOXES7 = array.new_box()
-time7              = f_sessionToMacro(macroSession7)
-lbl7               = f_sessionToLabel(macroSession7)
+time7              = sessionToMacro(macroSession7)
+lbl7               = sessionToLabel(macroSession7)
 
 show8              = input.bool(true, "", inline="inline macro8", group=groupMacroNY)
 string8            = input.string("PRE OPEN accumulation", "", inline="inline macro8", group=groupMacroNY, display=disp)
 macroSession8      = input.session("0850-0910", "", inline="inline macro8", group=groupMacroNY, display=disp)
 var line[] _LINES8 = array.new_line()
 var box[]  _BOXES8 = array.new_box()
-time8              = f_sessionToMacro(macroSession8)
-lbl8               = f_sessionToLabel(macroSession8)
+time8              = sessionToMacro(macroSession8)
+lbl8               = sessionToLabel(macroSession8)
 
 show9              = input.bool(true, "", inline="inline macro9", group=groupMacroNY)
 string9            = input.string("Open High prob manipulation / retour zone HTF", "", inline="inline macro9", group=groupMacroNY, display=disp)
 macroSession9      = input.session("0920-0940", "", inline="inline macro9", group=groupMacroNY, display=disp)
 var line[] _LINES9 = array.new_line()
 var box[]  _BOXES9 = array.new_box()
-time9              = f_sessionToMacro(macroSession9)
-lbl9               = f_sessionToLabel(macroSession9)
+time9              = sessionToMacro(macroSession9)
+lbl9               = sessionToLabel(macroSession9)
 
 show10              = input.bool(true, "", inline="inline macro10", group=groupMacroNY)
 string10            = input.string("continuation de 9:20", "", inline="inline macro10", group=groupMacroNY, display=disp)
 macroSession10      = input.session("0950-1010", "", inline="inline macro10", group=groupMacroNY, display=disp)
 var line[] _LINES10 = array.new_line()
 var box[]  _BOXES10 = array.new_box()
-time10              = f_sessionToMacro(macroSession10)
-lbl10              = f_sessionToLabel(macroSession10)
+time10              = sessionToMacro(macroSession10)
+lbl10               = sessionToLabel(macroSession10)
 
 show11              = input.bool(true, "", inline="inline macro11", group=groupMacroNY)
 string11            = input.string("HIGH Proba reversal", "", inline="inline macro11", group=groupMacroNY, display=disp)
 macroSession11      = input.session("1020-1040", "", inline="inline macro11", group=groupMacroNY, display=disp)
 var line[] _LINES11 = array.new_line()
 var box[]  _BOXES11 = array.new_box()
-time11              = f_sessionToMacro(macroSession11)
-lbl11              = f_sessionToLabel(macroSession11)
+time11              = sessionToMacro(macroSession11)
+lbl11               = sessionToLabel(macroSession11)
 
 show12              = input.bool(true, "", inline="inline macro12", group=groupMacroNY)
 string12            = input.string("ChOCh / continuation", "", inline="inline macro12", group=groupMacroNY, display=disp)
 macroSession12      = input.session("1150-1110", "", inline="inline macro12", group=groupMacroNY, display=disp)
 var line[] _LINES12 = array.new_line()
 var box[]  _BOXES12 = array.new_box()
-time12              = f_sessionToMacro(macroSession12)
-lbl12              = f_sessionToLabel(macroSession12)
+time12              = sessionToMacro(macroSession12)
+lbl12               = sessionToLabel(macroSession12)
 
 show13              = input.bool(true, "", inline="inline macro13", group=groupMacroNY)
 string13            = input.string("PRE LUNCH", "", inline="inline macro13", group=groupMacroNY, display=disp)
 macroSession13      = input.session("1250-1310", "", inline="inline macro13", group=groupMacroNY, display=disp)
 var line[] _LINES13 = array.new_line()
 var box[]  _BOXES13 = array.new_box()
-time13              = f_sessionToMacro(macroSession13)
-lbl13              = f_sessionToLabel(macroSession13)
+time13              = sessionToMacro(macroSession13)
+lbl13               = sessionToLabel(macroSession13)
 
 show14              = input.bool(true, "", inline="inline macro14", group=groupMacroNY)
 string14            = input.string("High Prob opening range", "", inline="inline macro14", group=groupMacroNY, display=disp)
 macroSession14      = input.session("1320-1340", "", inline="inline macro14", group=groupMacroNY, display=disp)
 var line[] _LINES14 = array.new_line()
 var box[]  _BOXES14 = array.new_box()
-time14              = f_sessionToMacro(macroSession14)
-lbl14              = f_sessionToLabel(macroSession14)
+time14              = sessionToMacro(macroSession14)
+lbl14               = sessionToLabel(macroSession14)
 
 show15              = input.bool(true, "", inline="inline macro15", group=groupMacroNY)
 string15            = input.string("volatilité + livraison du prix a un swing", "", inline="inline macro15", group=groupMacroNY, display=disp)
 macroSession15      = input.session("1420-1440", "", inline="inline macro15", group=groupMacroNY, display=disp)
 var line[] _LINES15 = array.new_line()
 var box[]  _BOXES15 = array.new_box()
-time15              = f_sessionToMacro(macroSession15)
-lbl15              = f_sessionToLabel(macroSession15)
+time15              = sessionToMacro(macroSession15)
+lbl15               = sessionToLabel(macroSession15)
 
 show16              = input.bool(true, "", inline="inline macro16", group=groupMacroNY)
 string16            = input.string("/!!!\\ High prob spooling", "", inline="inline macro16", group=groupMacroNY, display=disp)
 macroSession16      = input.session("1520-1540", "", inline="inline macro16", group=groupMacroNY, display=disp)
 var line[] _LINES16 = array.new_line()
 var box[]  _BOXES16 = array.new_box()
-time16              = f_sessionToMacro(macroSession16)
-lbl16              = f_sessionToLabel(macroSession16)
+time16              = sessionToMacro(macroSession16)
+lbl16               = sessionToLabel(macroSession16)
 
 show17              = input.bool(true, "", inline="inline macro17", group=groupMacroNY)
 string17            = input.string("Final hour High prob spooling", "", inline="inline macro17", group=groupMacroNY, display=disp)
 macroSession17      = input.session("1550-1610", "", inline="inline macro17", group=groupMacroNY, display=disp)
 var line[] _LINES17 = array.new_line()
 var box[]  _BOXES17 = array.new_box()
-time17              = f_sessionToMacro(macroSession17)
-lbl17              = f_sessionToLabel(macroSession17)
+time17              = sessionToMacro(macroSession17)
+lbl17               = sessionToLabel(macroSession17)
 
 show18              = input.bool(true, "", inline="inline macro18", group=groupMacro)
 string18            = input.string("Macro title", "", inline="inline macro18", group=groupMacro, display=disp)
 macroSession18      = input.session("1950-2010", "", inline="inline macro18", group=groupMacro, display=disp)
 var line[] _LINES18 = array.new_line()
 var box[]  _BOXES18 = array.new_box()
-time18              = f_sessionToMacro(macroSession18)
-lbl18              = f_sessionToLabel(macroSession18)
+time18              = sessionToMacro(macroSession18)
+lbl18               = sessionToLabel(macroSession18)
 
 show19              = input.bool(true, "", inline="inline macro19", group=groupMacro)
 string19            = input.string("Macro title", "", inline="inline macro19", group=groupMacro, display=disp)
 macroSession19      = input.session("2050-2110", "", inline="inline macro19", group=groupMacro, display=disp)
 var line[] _LINES19 = array.new_line()
 var box[]  _BOXES19 = array.new_box()
-time19              = f_sessionToMacro(macroSession19)
-lbl19              = f_sessionToLabel(macroSession19)
+time19              = sessionToMacro(macroSession19)
+lbl19               = sessionToLabel(macroSession19)
 
 show20              = input.bool(true, "", inline="inline macro20", group=groupMacro)
 string20            = input.string("Macro title", "", inline="inline macro20", group=groupMacro, display=disp)
 macroSession20      = input.session("2150-2210", "", inline="inline macro20", group=groupMacro, display=disp)
 var line[] _LINES20 = array.new_line()
 var box[]  _BOXES20 = array.new_box()
-time20              = f_sessionToMacro(macroSession20)
-lbl20              = f_sessionToLabel(macroSession20)
+time20              = sessionToMacro(macroSession20)
+lbl20               = sessionToLabel(macroSession20)
 
 show21              = input.bool(true, "", inline="inline macro21", group=groupMacro)
 string21            = input.string("Macro title", "", inline="inline macro21", group=groupMacro, display=disp)
 macroSession21      = input.session("2250-2310", "", inline="inline macro21", group=groupMacro, display=disp)
 var line[] _LINES21 = array.new_line()
 var box[]  _BOXES21 = array.new_box()
-time21              = f_sessionToMacro(macroSession21)
-lbl21              = f_sessionToLabel(macroSession21)
+time21              = sessionToMacro(macroSession21)
+lbl21               = sessionToLabel(macroSession21)
 
 show22              = input.bool(true, "", inline="inline macro22", group=groupMacro)
 string22            = input.string("Macro title", "", inline="inline macro22", group=groupMacro, display=disp)
 macroSession22      = input.session("2350-0010", "", inline="inline macro22", group=groupMacro, display=disp)
 var line[] _LINES22 = array.new_line()
 var box[]  _BOXES22 = array.new_box()
-time22              = f_sessionToMacro(macroSession22)
-lbl22              = f_sessionToLabel(macroSession22)
+time22              = sessionToMacro(macroSession22)
+lbl22               = sessionToLabel(macroSession22)
 //#endregion
 
 
 //#region[PLOT]
 if macroMode=="On Chart"
 	if show1
-		macroOC(_LINES1, time1, lbl1, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       //\////////////////////////////////////////////////////////////////////////////\///
-	if show2																							  //  INSTRUCTIONS TO ADD CUSTOM MACROs (PART 2):                                  //
-		macroOC(_LINES2, time2, lbl2, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       //  2.1) Find line 364 under "CUSTOM MACROS ON CHART PLOT" title.                //
-	if show3																							  //  2.2) Copy it to the following line, remove '//' and replace 'YourMacroName'  //
-		macroOC(_LINES3, time3, lbl3, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       //       with what you used above in step (1.2).                                 //
-	if show4																							  //  2.3) Make sure the beginning of the line is aligned with all the ones above; //
-		macroOC(_LINES4, time4, lbl4, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       //       To do that press 'Tab' once, or add spaces until they match.            //
-	if show5																							  //                                                                               //
-		macroOC(_LINES5, time5, lbl5, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       ///\/////////////////////////.   CONT'D BELOW   .///////////////////////////////\//
+		macroOC(_LINES1, time1, lbl1, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession1)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
+	if show2
+		macroOC(_LINES2, time2, lbl2, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession2)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
+	if show3
+		macroOC(_LINES3, time3, lbl3, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession3)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
+	if show4
+		macroOC(_LINES4, time4, lbl4, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession4)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
+	if show5
+		macroOC(_LINES5, time5, lbl5, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession5)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show6
 		macroOC(_LINES6, time6, lbl6, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       
+        if isInSession(macroSession6)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show7
 		macroOC(_LINES7, time7, lbl7, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       
+        if isInSession(macroSession7)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show8
 		macroOC(_LINES8, time8, lbl8, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       
+        if isInSession(macroSession8)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show9
 		macroOC(_LINES9, time9, lbl9, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       
+        if isInSession(macroSession9)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show10
 		macroOC(_LINES10, time10, lbl10, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession10)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show11
 		macroOC(_LINES11, time11, lbl11, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession11)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show12
 		macroOC(_LINES12, time12, lbl12, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession12)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show13
 		macroOC(_LINES13, time13, lbl13, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession13)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show14
 		macroOC(_LINES14, time14, lbl14, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession14)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show15
 		macroOC(_LINES15, time15, lbl15, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession15)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show16
 		macroOC(_LINES16, time16, lbl16, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession16)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show17
 		macroOC(_LINES17, time17, lbl17, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession17)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show18
 		macroOC(_LINES18, time18, lbl18, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession18)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show19
 		macroOC(_LINES19, time19, lbl19, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession19)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show20
 		macroOC(_LINES20, time20, lbl20, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession20)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show21
 		macroOC(_LINES21, time21, lbl21, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession21)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show22
 		macroOC(_LINES22, time22, lbl22, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')
+        if isInSession(macroSession22)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 
 	// CUSTOM MACROS ON CHART PLOT
 	// macroOC(_lines_YourMacroName, _timeYourMacroName, _lblYourMacroName, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto', '')
@@ -398,48 +443,92 @@ if macroMode=="On Chart"
 else
 	if show1
 		macroNP(_BOXES1, time1, lbl1, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       //\//////////////////////////.      \/\/\/      .//////////////////////////////\///
+        if isInSession(macroSession1)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show2																							  //                                                                               //
 		macroNP(_BOXES2, time2, lbl2, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       //  2.4) Find line 420 under "CUSTOM MACROS NEW PANE PLOT" title.                //														          
+        if isInSession(macroSession2)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show3																							  //  2.5) Copy it to the following line, remove '//' and replace 'YourMacroName'  //
 		macroNP(_BOXES3, time3, lbl3, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       //       with what you used above in step (1.2).                                 //
+        if isInSession(macroSession3)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show4																							  //  2.6) Make sure the beginning of the line is aligned with all the ones above; //
 		macroNP(_BOXES4, time4, lbl4, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       //       To do that press 'Tab' once, or add spaces until they match.            //
+        if isInSession(macroSession4)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show5																							  //                                                                               //
 		macroNP(_BOXES5, time5, lbl5, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       ///\///////////////////////.    LAST STEP BELOW   ./////////////////////////////\//
+        if isInSession(macroSession5)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show6
 		macroNP(_BOXES6, time6, lbl6, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')       
+        if isInSession(macroSession6)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show7
 		macroNP(_BOXES7, time7, lbl7, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto') 	  
+        if isInSession(macroSession7)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show8
 		macroNP(_BOXES8, time8, lbl8, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession8)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show9
 		macroNP(_BOXES9, time9, lbl9, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession9)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show10
 		macroNP(_BOXES10, time10, lbl10, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession10)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show11
 		macroNP(_BOXES11, time11, lbl11, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession11)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show12
 		macroNP(_BOXES12, time12, lbl12, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession12)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show13
 		macroNP(_BOXES13, time13, lbl13, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession13)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show14
 		macroNP(_BOXES14, time14, lbl14, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession14)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show15
 		macroNP(_BOXES15, time15, lbl15, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession15)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show16
 		macroNP(_BOXES16, time16, lbl16, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession16)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show17
 		macroNP(_BOXES17, time17, lbl17, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession17)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show18
 		macroNP(_BOXES18, time18, lbl18, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession18)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show19
 		macroNP(_BOXES19, time19, lbl19, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession19)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show20
 		macroNP(_BOXES20, time20, lbl20, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession20)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show21
 		macroNP(_BOXES21, time21, lbl21, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession21)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 	if show22
 		macroNP(_BOXES22, time22, lbl22, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto')																										 
+        if isInSession(macroSession22)
+            alert("Barre dans la macro: " + "Alerte text", alert.freq_once_per_bar)
 
 	// CUSTOM MACROS NEW PANE PLOT
 	// macroNP(_boxesYourMacroName, _timeYourMacroName, _lblYourMacroName, dayofweek(time)==dayofweek.friday and syminfo.type!='crypto', '')
